@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[3]:
+# In[1]:
 
 
 import numpy as np
@@ -18,7 +18,7 @@ import json
 from spotipy.oauth2 import SpotifyClientCredentials
 
 
-# In[9]:
+# In[2]:
 
 
 #Setting up everything we need to make calls to the Spotify API
@@ -32,7 +32,7 @@ sp = spotipy.Spotify(client_credentials_manager=client_credentials_manager)
 album_uri = "spotify:album:0WBKzTwWxcjFhFNEoOYY5A"
 
 
-# In[5]:
+# In[3]:
 
 
 def get_album_info(album_uri):
@@ -63,22 +63,22 @@ def get_album_info(album_uri):
     return pd.DataFrame(album_audio_features)
 
 
-# In[6]:
+# In[7]:
 
 
 def add_album_features(feat_dict):
     #Adds data for the album as a whole (just averages the values for all tracks)
     total = len(feat_dict['Name'])
 
-    feat_dict['Name'].append("Whole Album")
-    feat_dict['Danceability'].append(sum(feat_dict['Danceability'])/total)
-    feat_dict['Energy'].append(sum(feat_dict['Energy'])/total)
-    feat_dict['Acousticness'].append(sum(feat_dict['Acousticness'])/total)
-    feat_dict['Instrumentalness'].append(sum(feat_dict['Instrumentalness'])/total)
-    feat_dict['Valence'].append(sum(feat_dict['Valence'])/total)
+    feat_dict['Name'].insert(0, "Whole Album")
+    feat_dict['Danceability'].insert(0, sum(feat_dict['Danceability'])/total)
+    feat_dict['Energy'].insert(0, sum(feat_dict['Energy'])/total)
+    feat_dict['Acousticness'].insert(0, sum(feat_dict['Acousticness'])/total)
+    feat_dict['Instrumentalness'].insert(0, sum(feat_dict['Instrumentalness'])/total)
+    feat_dict['Valence'].insert(0, sum(feat_dict['Valence'])/total)
 
 
-# In[7]:
+# In[5]:
 
 
 def track_changed(change):
@@ -101,7 +101,7 @@ def track_changed(change):
         fig_widget.data[0].marker=dict(color=new_color)
 
 
-# In[12]:
+# In[8]:
 
 
 #Gets each song's audio features analysis in a pandas dataframe
